@@ -19,6 +19,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/blog/exclusive-vs-shared-leads",
     "/blog/lead-generation-for-insurance-agents",
     "/blog/compliance-in-lead-generation",
+    "/blog/how-to-convert-insurance-leads",
+    "/blog/life-insurance-lead-generation-strategies",
+    "/blog/debt-relief-leads-guide",
+    "/blog/tcpa-compliance-lead-generation",
+    "/blog/insurance-crm-lead-management",
   ];
 
   return routes.map((route) => ({
