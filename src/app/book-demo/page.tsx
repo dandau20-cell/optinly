@@ -61,6 +61,11 @@ export default function BookDemoPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
+      <script
+        src="https://link.msgsndr.com/js/form_embed.js"
+        type="text/javascript"
+        async
+      />
       <Header />
       <main className="py-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -74,13 +79,15 @@ export default function BookDemoPage() {
             </p>
           </div>
 
-          <div
-            id="ghl-calendar"
-            className="min-h-[600px] bg-surface rounded-xl border border-border"
-          >
-            <p className="text-center text-muted py-20">
-              Calendar loading...
-            </p>
+          <div className="rounded-xl border border-border overflow-hidden bg-white">
+            <iframe
+              src="https://api.leadconnectorhq.com/widget/booking/00yQMZ38AmCmzdtClXeX"
+              style={{ width: "100%", border: "none", overflow: "hidden" }}
+              scrolling="no"
+              id="E2LYASGpfiyGFrVVAuqo_1776028478044"
+              title="Book a Demo - Optinly"
+              height="700"
+            />
           </div>
 
           <div className="mt-12 grid sm:grid-cols-3 gap-6 text-center">
