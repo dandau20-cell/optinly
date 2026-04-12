@@ -24,6 +24,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/blog/debt-relief-leads-guide",
     "/blog/tcpa-compliance-lead-generation",
     "/blog/insurance-crm-lead-management",
+    "/intake-quiz",
+    "/success",
   ];
 
   return routes.map((route) => ({
