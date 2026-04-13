@@ -23,7 +23,10 @@ const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID;
 const N8N_WEBHOOK_URL = process.env.N8N_OPTINLY_WEBHOOK_URL;
 
 async function sendToGHL(body: IntakeSubmission) {
-  if (!GHL_API_KEY || !GHL_LOCATION_ID) return;
+  if (!GHL_API_KEY || !GHL_LOCATION_ID) {
+    console.log("[GHL] Skipped — missing GHL_API_KEY or GHL_LOCATION_ID");
+    return;
+  }
 
   const nameParts = body.fullName.trim().split(" ");
   const firstName = nameParts[0];
@@ -33,39 +36,49 @@ async function sendToGHL(body: IntakeSubmission) {
   const digits = body.phone.replace(/\D/g, "");
   const phone = digits.startsWith("1") ? `+${digits}` : `+1${digits}`;
 
-  try {
-    await fetch("https://services.leadconnectorhq.com/contacts/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${GHL_API_KEY}`,
-        Version: "2021-07-28",
-      },
-      body: JSON.stringify({
-        locationId: GHL_LOCATION_ID,
-        firstName,
-        lastName,
-        email: body.email,
-        phone,
-        source: "Optinly Intake Quiz",
-        tags: [
-          `industry:${body.industry}`,
-          "optinly-lead",
-          ...(body.improvements || []).map((i: string) => `improvement:${i}`),
-        ],
-        customFields: [
-          { key: "industry", value: body.industry },
-          { key: "improvements", value: (body.improvements || []).join(", ") },
-          { key: "annual_revenue", value: body.revenue || "" },
-          { key: "lead_website", value: body.website || "" },
-          { key: "tcpa_consent", value: body.tcpaConsent ? "Yes" : "No" },
-          { key: "consent_timestamp", value: new Date().toISOString() },
-        ],
-      }),
-    });
-  } catch (err) {
-    console.error("[GHL Error]", err);
-  }
+  // Safely normalize improvements — could be array, string, or undefined
+  const improvements = Array.isArray(body.improvements)
+    ? body.improvements
+    : body.improvements
+    ? [body.improvements]
+    : [];
+
+  const payload = {
+    locationId: GHL_LOCATION_ID,
+    firstName,
+    lastName,
+    email: body.email,
+    phone,
+    source: "Optinly Intake Quiz",
+    tags: [
+      `industry:${body.industry}`,
+      "optinly-lead",
+      ...improvements.map((i: string) => `improvement:${i}`),
+    ],
+    customFields: [
+      { key: "industry", value: body.industry },
+      { key: "improvements", value: improvements.join(", ") },
+      { key: "annual_revenue", value: body.revenue || "" },
+      { key: "lead_website", value: body.website || "" },
+      { key: "tcpa_consent", value: body.tcpaConsent ? "Yes" : "No" },
+      { key: "consent_timestamp", value: new Date().toISOString() },
+    ],
+  };
+
+  console.log("[GHL] Sending contact:", JSON.stringify(payload, null, 2));
+
+  const res = await fetch("https://services.leadconnectorhq.com/contacts/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${GHL_API_KEY}`,
+      Version: "2021-07-28",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const data = await res.json();
+  console.log("[GHL] Response:", res.status, JSON.stringify(data));
 }
 
 async function sendToN8N(body: IntakeSubmission) {
@@ -104,8 +117,8 @@ export async function POST(request: NextRequest) {
 
     console.log("[Intake Submission]", JSON.stringify(body, null, 2));
 
-    // Fire and forget — send to GHL and n8n in parallel
-    Promise.all([sendToGHL(body), sendToN8N(body)]).catch(() => {});
+    // Await both — Vercel kills the function after response, so fire-and-forget won't work
+    await Promise.all([sendToGHL(body), sendToN8N(body)]);
 
     return NextResponse.json({
       success: true,
