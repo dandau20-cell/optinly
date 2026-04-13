@@ -57,12 +57,12 @@ async function sendToGHL(body: IntakeSubmission) {
     ],
     companyName: body.website || "",
     customFields: [
-      { key: "contact.industry", value: body.industry },
-      { key: "contact.improvements", value: improvements.join(", ") },
-      { key: "contact.annual_revenue", value: body.revenue || "" },
-      { key: "contact.lead_website", value: body.website || "" },
-      { key: "contact.tcpa_consent", value: body.tcpaConsent ? "Yes" : "No" },
-      { key: "contact.consent_timestamp", value: new Date().toISOString() },
+      { id: "V90QBvarL8rQZsKBBlXa", value: body.industry },
+      { id: "Pieuxsvx3zpSa1WGe1W8", value: improvements.join(", ") },
+      { id: "07rRqLTrq7j3AHup9ZeX", value: body.revenue || "" },
+      { id: "1tP5jxeaVG9wA1N72Pkx", value: body.website || "" },
+      { id: "9bJFJEPqMigcv5FdfqyV", value: body.tcpaConsent ? "Yes" : "No" },
+      { id: "JZOQfXjwc2Eg3L6SQOIA", value: new Date().toISOString() },
     ],
   };
 
