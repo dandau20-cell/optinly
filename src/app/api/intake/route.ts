@@ -49,26 +49,27 @@ async function sendToGHL(body: IntakeSubmission) {
     lastName,
     email: body.email,
     phone,
+    website: body.website || "",
+    companyName: (body as Record<string, unknown>).agency_name as string || "",
     source: "Optinly Intake Quiz",
     tags: [
       `industry:${body.industry}`,
       "optinly-lead",
       ...improvements.map((i: string) => `improvement:${i}`),
     ],
-    companyName: body.website || "",
     customFields: [
-      { id: "V90QBvarL8rQZsKBBlXa", value: body.industry },
-      { id: "Pieuxsvx3zpSa1WGe1W8", value: improvements.join(", ") },
-      { id: "07rRqLTrq7j3AHup9ZeX", value: body.revenue || "" },
-      { id: "1tP5jxeaVG9wA1N72Pkx", value: body.website || "" },
-      { id: "9bJFJEPqMigcv5FdfqyV", value: body.tcpaConsent ? "Yes" : "No" },
-      { id: "JZOQfXjwc2Eg3L6SQOIA", value: new Date().toISOString() },
+      { id: "V90QBvarL8rQZsKBBlXa", field_value: body.industry },
+      { id: "Pieuxsvx3zpSa1WGe1W8", field_value: improvements.join(", ") },
+      { id: "07rRqLTrq7j3AHup9ZeX", field_value: body.revenue || "" },
+      { id: "1tP5jxeaVG9wA1N72Pkx", field_value: body.website || "" },
+      { id: "9bJFJEPqMigcv5FdfqyV", field_value: body.tcpaConsent ? "Yes" : "No" },
+      { id: "JZOQfXjwc2Eg3L6SQOIA", field_value: new Date().toISOString() },
     ],
   };
 
   console.log("[GHL] Sending contact:", JSON.stringify(payload, null, 2));
 
-  const res = await fetch("https://services.leadconnectorhq.com/contacts/", {
+  const res = await fetch("https://services.leadconnectorhq.com/contacts/upsert", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
