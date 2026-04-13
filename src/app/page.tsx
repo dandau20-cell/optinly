@@ -4,14 +4,14 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
-  title: "Optinly | Qualified B2B Leads for Insurance & Debt Relief",
+  title: "Optinly | Qualified Leads for Insurance, Debt Relief & MVA",
   description:
-    "Pay-per-lead marketplace for insurance agents and debt relief companies. Real-time, verified, exclusive leads with no monthly fees or retainers.",
+    "Pay-per-lead marketplace for insurance agents, debt relief companies, and law firms. Real-time, verified, exclusive leads with no monthly fees or retainers.",
   alternates: { canonical: "https://optinly.io" },
   openGraph: {
-    title: "Optinly | Qualified B2B Leads for Insurance & Debt Relief",
+    title: "Optinly | Qualified Leads for Insurance, Debt Relief & MVA",
     description:
-      "Pay-per-lead marketplace for insurance agents and debt relief companies. Real-time, verified, exclusive leads with no monthly fees or retainers.",
+      "Pay-per-lead marketplace for insurance agents, debt relief companies, and law firms. Real-time, verified, exclusive leads with no monthly fees or retainers.",
     url: "https://optinly.io",
   },
 };
@@ -25,7 +25,7 @@ const faqSchema = {
       name: "What is Optinly?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Optinly is a B2B lead marketplace that connects insurance agents and debt relief companies with real-time, verified, exclusive leads on a pay-per-lead basis.",
+        text: "Optinly is a lead marketplace that connects insurance agents, debt relief companies, and law firms with real-time, verified, exclusive leads on a pay-per-lead basis.",
       },
     },
     {
@@ -77,10 +77,10 @@ export default function HomePage() {
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
                 <Link
-                  href="/book-demo"
+                  href="/intake-quiz"
                   className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-amber-300 text-foreground font-medium hover:bg-amber-400 transition-colors"
                 >
-                  Book a Demo
+                  Get Leads
                 </Link>
                 <Link
                   href="/how-it-works"
@@ -236,14 +236,14 @@ export default function HomePage() {
               Ready to Grow Your Pipeline?
             </h2>
             <p className="mt-4 text-sage-100 text-lg">
-              Schedule a demo call and learn how Optinly can deliver qualified
-              leads to your business.
+              Tell us what you need and start receiving qualified leads
+              in less than 24 hours.
             </p>
             <Link
-              href="/book-demo"
+              href="/intake-quiz"
               className="inline-flex items-center justify-center mt-8 px-8 py-3.5 rounded-lg bg-amber-300 text-foreground font-medium hover:bg-amber-400 transition-colors"
             >
-              Book a Demo
+              Get Leads
             </Link>
           </div>
         </section>

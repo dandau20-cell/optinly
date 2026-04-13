@@ -84,10 +84,10 @@ export default function Header() {
           {/* CTA */}
           <div className="hidden md:block">
             <Link
-              href="/book-demo"
+              href="/intake-quiz"
               className="inline-flex items-center px-5 py-2.5 rounded-lg bg-sage-500 text-white text-sm font-medium hover:bg-sage-600 transition-colors"
             >
-              Book a Demo
+              Get Leads
             </Link>
           </div>
 
@@ -199,11 +199,11 @@ export default function Header() {
                 Blog
               </Link>
               <Link
-                href="/book-demo"
+                href="/intake-quiz"
                 className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-sage-500 text-white text-sm font-medium hover:bg-sage-600 transition-colors mt-2"
                 onClick={() => setMobileOpen(false)}
               >
-                Book a Demo
+                Get Leads
               </Link>
             </nav>
           </div>

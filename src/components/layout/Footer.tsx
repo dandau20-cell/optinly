@@ -12,8 +12,8 @@ export default function Footer() {
               <span className="text-xl font-display text-white">Optinly</span>
             </Link>
             <p className="text-sm text-gray-400 leading-relaxed">
-              Qualified B2B leads for insurance agents and debt relief companies.
-              Pay only for results.
+              Qualified leads for insurance agents, debt relief companies, and
+              law firms. Pay only for results.
             </p>
           </div>
 
@@ -82,10 +82,10 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/book-demo"
+                  href="/intake-quiz"
                   className="text-sm text-gray-300 hover:text-white transition-colors"
                 >
-                  Book a Demo
+                  Get Leads
                 </Link>
               </li>
             </ul>

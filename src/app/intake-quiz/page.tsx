@@ -11,35 +11,44 @@ import Footer from "@/components/layout/Footer";
 
 interface FormData {
   industry: string;
-  volume: string;
-  states: string;
-  budget: string;
+  improvements: string[];
+  revenue: string;
+  website: string;
   fullName: string;
   email: string;
   phone: string;
-  company: string;
   tcpaConsent: boolean;
 }
 
-const TOTAL_STEPS = 6;
+const TOTAL_STEPS = 7;
 
 const INDUSTRY_OPTIONS = [
-  "Life Insurance",
-  "Debt Relief",
-  "Medicare",
-  "Final Expense",
-  "Auto Insurance",
-  "Other",
+  { label: "Insurance", icon: "shield" },
+  { label: "Debt Relief", icon: "chart" },
+  { label: "MVA", icon: "scale" },
 ];
 
-const VOLUME_OPTIONS = ["10-25", "25-50", "50-100", "100-250", "250+"];
-
-const BUDGET_OPTIONS = [
-  "Under $500",
-  "$500-$1,000",
-  "$1,000-$2,500",
-  "$2,500-$5,000",
-  "$5,000+",
+const IMPROVEMENT_OPTIONS = [
+  {
+    id: "lead-gen",
+    label: "Lead Generation",
+    desc: "Generate More Qualified Leads",
+  },
+  {
+    id: "sales",
+    label: "Sales",
+    desc: "Convert More Leads Into Sales",
+  },
+  {
+    id: "lead-quality",
+    label: "Improve Lead Quality",
+    desc: "Increase Contact and Conversion Rate",
+  },
+  {
+    id: "digital",
+    label: "Digital Presence",
+    desc: "Get discovered by people looking for your services online",
+  },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -54,13 +63,12 @@ export default function IntakeQuizPage() {
 
   const [formData, setFormData] = useState<FormData>({
     industry: "",
-    volume: "",
-    states: "",
-    budget: "",
+    improvements: [],
+    revenue: "",
+    website: "",
     fullName: "",
     email: "",
     phone: "",
-    company: "",
     tcpaConsent: false,
   });
 
@@ -71,14 +79,6 @@ export default function IntakeQuizPage() {
       setStep(next);
     },
     [step]
-  );
-
-  const selectOption = useCallback(
-    (field: keyof FormData, value: string, nextStep: number) => {
-      setFormData((prev) => ({ ...prev, [field]: value }));
-      setTimeout(() => goTo(nextStep), 250);
-    },
-    [goTo]
   );
 
   const handleSubmit = async () => {
@@ -92,10 +92,19 @@ export default function IntakeQuizPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-      router.push("/success");
+      router.push("/book-demo");
     } catch {
       setIsSubmitting(false);
     }
+  };
+
+  const toggleImprovement = (id: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      improvements: prev.improvements.includes(id)
+        ? prev.improvements.filter((i) => i !== id)
+        : [...prev.improvements, id],
+    }));
   };
 
   /* Progress */
@@ -109,11 +118,10 @@ export default function IntakeQuizPage() {
 
   return (
     <>
-      {/* SEO handled via metadata export in layout or head */}
-      <title>Intake Quiz | Optinly</title>
+      <title>Get Leads | Optinly</title>
       <meta
         name="description"
-        content="Answer a few quick questions to get matched with exclusive, TCPA-compliant leads delivered in real-time. Pre-qualify now with Optinly."
+        content="Answer a few quick questions to get matched with exclusive, verified leads delivered in real-time. Get started with Optinly."
       />
 
       <Header />
@@ -140,20 +148,25 @@ export default function IntakeQuizPage() {
             <div key="step-1" className={`${animClass}`}>
               <div className="rounded-2xl border border-[#E8E6E1] bg-white p-8 shadow-sm sm:p-12">
                 <h1 className="font-serif text-3xl leading-tight text-[#1A1A18] sm:text-4xl">
-                  Get Pre-Qualified Leads Delivered&nbsp;to&nbsp;You
+                  Want more qualified customers?
                 </h1>
                 <p className="mt-4 text-lg text-[#4A4A45]">
-                  Answer a few quick questions so we can match you with the
-                  right leads for your business.
+                  Simply set your ideal client criteria, and{" "}
+                  <strong>get new leads in less than 24hrs.</strong>
                 </p>
 
-                <ul className="mt-8 space-y-4">
+                <ul className="mt-8 space-y-5">
                   {[
-                    "Exclusive, TCPA-compliant leads",
-                    "Delivered in real-time to your CRM",
-                    "You only pay for leads that match your criteria",
+                    {
+                      title: "Access High Quality Leads On Demand",
+                      desc: "Get pre-qualified leads delivered to you wherever you want in real-time",
+                    },
+                    {
+                      title: "We Pay For Your Marketing",
+                      desc: "You pay us only for prospects that are fit for your business",
+                    },
                   ].map((item) => (
-                    <li key={item} className="flex items-start gap-3">
+                    <li key={item.title} className="flex items-start gap-3">
                       <svg
                         className="mt-0.5 h-5 w-5 shrink-0 text-[#2D6A4F]"
                         fill="none"
@@ -167,18 +180,25 @@ export default function IntakeQuizPage() {
                           d="M5 13l4 4L19 7"
                         />
                       </svg>
-                      <span className="text-[#1A1A18]">{item}</span>
+                      <div>
+                        <span className="font-semibold text-[#1A1A18]">
+                          {item.title}
+                        </span>
+                        <p className="text-sm text-[#4A4A45] mt-0.5">
+                          {item.desc}
+                        </p>
+                      </div>
                     </li>
                   ))}
                 </ul>
 
                 <button
                   onClick={() => goTo(2)}
-                  className="mt-10 inline-flex items-center rounded-xl bg-[#2D6A4F] px-8 py-3.5 text-base font-semibold text-white transition-colors hover:bg-[#245A43]"
+                  className="mt-10 inline-flex w-full items-center justify-center rounded-xl bg-[#2D6A4F] px-8 py-4 text-lg font-semibold text-white transition-colors hover:bg-[#245A43] sm:w-auto"
                 >
-                  Get Started
+                  Next
                   <svg
-                    className="ml-2 h-4 w-4"
+                    className="ml-2 h-5 w-5"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -200,17 +220,46 @@ export default function IntakeQuizPage() {
             <div key="step-2" className={`${animClass}`}>
               <div className="rounded-2xl border border-[#E8E6E1] bg-white p-8 shadow-sm sm:p-12">
                 <h2 className="font-serif text-2xl text-[#1A1A18] sm:text-3xl">
-                  What type of leads are you looking&nbsp;for?
+                  What industry do you need the leads&nbsp;for?
                 </h2>
 
-                <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
                   {INDUSTRY_OPTIONS.map((option) => (
-                    <OptionCard
-                      key={option}
-                      label={option}
-                      selected={formData.industry === option}
-                      onClick={() => selectOption("industry", option, 3)}
-                    />
+                    <button
+                      key={option.label}
+                      onClick={() => {
+                        setFormData((prev) => ({
+                          ...prev,
+                          industry: option.label,
+                        }));
+                        setTimeout(() => goTo(3), 250);
+                      }}
+                      className={`relative flex flex-col items-center justify-center rounded-xl border-2 px-5 py-8 text-center transition-all ${
+                        formData.industry === option.label
+                          ? "border-[#2D6A4F] bg-[#2D6A4F]/10 text-[#1A1A18]"
+                          : "border-[#E8E6E1] bg-white text-[#1A1A18] hover:border-[#2D6A4F] hover:bg-[#2D6A4F]/5"
+                      }`}
+                    >
+                      {/* Icon */}
+                      <div className="mb-3">
+                        {option.icon === "shield" && (
+                          <svg className="h-10 w-10 text-[#2D6A4F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                          </svg>
+                        )}
+                        {option.icon === "chart" && (
+                          <svg className="h-10 w-10 text-[#2D6A4F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                          </svg>
+                        )}
+                        {option.icon === "scale" && (
+                          <svg className="h-10 w-10 text-[#2D6A4F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+                          </svg>
+                        )}
+                      </div>
+                      <span className="text-lg font-semibold">{option.label}</span>
+                    </button>
                   ))}
                 </div>
 
@@ -219,98 +268,120 @@ export default function IntakeQuizPage() {
             </div>
           )}
 
-          {/* ---- Step 3: Volume ---- */}
+          {/* ---- Step 3: Where can you improve ---- */}
           {step === 3 && (
             <div key="step-3" className={`${animClass}`}>
               <div className="rounded-2xl border border-[#E8E6E1] bg-white p-8 shadow-sm sm:p-12">
                 <h2 className="font-serif text-2xl text-[#1A1A18] sm:text-3xl">
-                  How many leads do you need per&nbsp;month?
+                  Where do you feel your firm can improve and do&nbsp;better?
                 </h2>
+                <p className="mt-2 text-sm text-[#4A4A45]">
+                  Select all that apply
+                </p>
 
-                <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                  {VOLUME_OPTIONS.map((option) => (
-                    <OptionCard
-                      key={option}
-                      label={option}
-                      selected={formData.volume === option}
-                      onClick={() => selectOption("volume", option, 4)}
-                    />
+                <div className="mt-8 space-y-3">
+                  {IMPROVEMENT_OPTIONS.map((option) => (
+                    <label
+                      key={option.id}
+                      className={`flex cursor-pointer items-start gap-4 rounded-xl border-2 px-5 py-4 transition-all ${
+                        formData.improvements.includes(option.id)
+                          ? "border-[#2D6A4F] bg-[#2D6A4F]/10"
+                          : "border-[#E8E6E1] bg-white hover:border-[#2D6A4F]/50"
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={formData.improvements.includes(option.id)}
+                        onChange={() => toggleImprovement(option.id)}
+                        className="mt-1 h-5 w-5 shrink-0 accent-[#2D6A4F] rounded"
+                      />
+                      <div>
+                        <span className="font-semibold text-[#1A1A18]">
+                          {option.label}:
+                        </span>{" "}
+                        <span className="text-[#4A4A45]">{option.desc}</span>
+                      </div>
+                    </label>
                   ))}
                 </div>
 
-                <BackButton onClick={() => goTo(2)} />
+                <NavButtons
+                  onBack={() => goTo(2)}
+                  onNext={() => goTo(4)}
+                  nextDisabled={formData.improvements.length === 0}
+                />
               </div>
             </div>
           )}
 
-          {/* ---- Step 4: States ---- */}
+          {/* ---- Step 4: Revenue ---- */}
           {step === 4 && (
             <div key="step-4" className={`${animClass}`}>
               <div className="rounded-2xl border border-[#E8E6E1] bg-white p-8 shadow-sm sm:p-12">
                 <h2 className="font-serif text-2xl text-[#1A1A18] sm:text-3xl">
-                  Which states are you licensed&nbsp;in?
+                  How much revenue do you generate per&nbsp;year?
                 </h2>
+                <p className="mt-2 text-sm text-[#4A4A45]">
+                  It helps us determine what type of partnership will be the most
+                  useful for you
+                </p>
 
-                <input
-                  type="text"
-                  value={formData.states}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      states: e.target.value,
-                    }))
-                  }
-                  placeholder="e.g. California, Texas, Florida..."
-                  className="mt-8 w-full rounded-xl border-2 border-[#E8E6E1] bg-white px-5 py-3.5 text-[#1A1A18] placeholder-[#4A4A45]/50 outline-none transition-colors focus:border-[#2D6A4F]"
-                />
-
-                <div className="mt-8 flex items-center justify-between">
-                  <BackButton onClick={() => goTo(3)} inline />
-                  <button
-                    onClick={() => goTo(5)}
-                    disabled={!formData.states.trim()}
-                    className="inline-flex items-center rounded-xl bg-[#2D6A4F] px-8 py-3 text-base font-semibold text-white transition-colors hover:bg-[#245A43] disabled:cursor-not-allowed disabled:opacity-40"
-                  >
-                    Continue
-                    <svg
-                      className="ml-2 h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2.5}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M13 7l5 5m0 0l-5 5m5-5H6"
-                      />
-                    </svg>
-                  </button>
+                <div className="mt-8 flex items-center rounded-xl border-2 border-[#E8E6E1] bg-white transition-colors focus-within:border-[#2D6A4F]">
+                  <span className="pl-5 text-lg font-medium text-[#4A4A45]">
+                    $
+                  </span>
+                  <input
+                    type="text"
+                    value={formData.revenue}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        revenue: e.target.value,
+                      }))
+                    }
+                    placeholder="Annual Revenue"
+                    className="w-full bg-transparent px-3 py-3.5 text-[#1A1A18] placeholder-[#4A4A45]/50 outline-none"
+                  />
                 </div>
+
+                <NavButtons
+                  onBack={() => goTo(3)}
+                  onNext={() => goTo(5)}
+                  nextDisabled={!formData.revenue.trim()}
+                />
               </div>
             </div>
           )}
 
-          {/* ---- Step 5: Budget ---- */}
+          {/* ---- Step 5: Website ---- */}
           {step === 5 && (
             <div key="step-5" className={`${animClass}`}>
               <div className="rounded-2xl border border-[#E8E6E1] bg-white p-8 shadow-sm sm:p-12">
                 <h2 className="font-serif text-2xl text-[#1A1A18] sm:text-3xl">
-                  What&apos;s your monthly budget for&nbsp;leads?
+                  What&apos;s your company website?
                 </h2>
+                <p className="mt-2 text-sm text-[#4A4A45]">
+                  If you don&apos;t have a website skip this question
+                </p>
 
-                <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                  {BUDGET_OPTIONS.map((option) => (
-                    <OptionCard
-                      key={option}
-                      label={option}
-                      selected={formData.budget === option}
-                      onClick={() => selectOption("budget", option, 6)}
-                    />
-                  ))}
-                </div>
+                <input
+                  type="url"
+                  value={formData.website}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      website: e.target.value,
+                    }))
+                  }
+                  placeholder="companysite.com"
+                  className="mt-8 w-full rounded-xl border-2 border-[#E8E6E1] bg-white px-5 py-3.5 text-[#1A1A18] placeholder-[#4A4A45]/50 outline-none transition-colors focus:border-[#2D6A4F]"
+                />
 
-                <BackButton onClick={() => goTo(4)} />
+                <NavButtons
+                  onBack={() => goTo(4)}
+                  onNext={() => goTo(6)}
+                  nextDisabled={false}
+                />
               </div>
             </div>
           )}
@@ -320,8 +391,12 @@ export default function IntakeQuizPage() {
             <div key="step-6" className={`${animClass}`}>
               <div className="rounded-2xl border border-[#E8E6E1] bg-white p-8 shadow-sm sm:p-12">
                 <h2 className="font-serif text-2xl text-[#1A1A18] sm:text-3xl">
-                  Almost done! Where should we send your lead&nbsp;details?
+                  How can we connect with you?
                 </h2>
+                <p className="mt-2 text-[#4A4A45]">
+                  To get your personalized offer and pricing, please enter your
+                  details
+                </p>
 
                 <div className="mt-8 space-y-5">
                   <InputField
@@ -331,7 +406,7 @@ export default function IntakeQuizPage() {
                     onChange={(v) =>
                       setFormData((prev) => ({ ...prev, fullName: v }))
                     }
-                    placeholder="John Smith"
+                    placeholder="Full Name"
                   />
                   <InputField
                     label="Work Email"
@@ -341,7 +416,7 @@ export default function IntakeQuizPage() {
                     onChange={(v) =>
                       setFormData((prev) => ({ ...prev, email: v }))
                     }
-                    placeholder="john@agency.com"
+                    placeholder="Work Email"
                   />
                   <InputField
                     label="Phone"
@@ -351,15 +426,7 @@ export default function IntakeQuizPage() {
                     onChange={(v) =>
                       setFormData((prev) => ({ ...prev, phone: v }))
                     }
-                    placeholder="(555) 123-4567"
-                  />
-                  <InputField
-                    label="Company Name"
-                    value={formData.company}
-                    onChange={(v) =>
-                      setFormData((prev) => ({ ...prev, company: v }))
-                    }
-                    placeholder="Acme Insurance (optional)"
+                    placeholder="Phone"
                   />
 
                   {/* TCPA Consent */}
@@ -376,9 +443,11 @@ export default function IntakeQuizPage() {
                       className="mt-1 h-4 w-4 shrink-0 accent-[#2D6A4F]"
                     />
                     <span className="text-sm leading-relaxed text-[#4A4A45]">
-                      I authorize Optinly and its partners to contact me by
-                      email, phone, and SMS regarding lead generation services.
-                      Consent is not required to make a purchase.
+                      By submitting this form, you consent to the processing of
+                      your personal data. I authorize Optinly and its partners
+                      to contact me by email, phone, and SMS regarding lead
+                      generation services. Consent is not required to make a
+                      purchase.
                     </span>
                   </label>
                 </div>
@@ -421,7 +490,7 @@ export default function IntakeQuizPage() {
                       </>
                     ) : (
                       <>
-                        Submit &amp; Get Your Leads
+                        Submit &amp; Book a Call
                         <svg
                           className="ml-2 h-4 w-4"
                           fill="none"
@@ -438,6 +507,32 @@ export default function IntakeQuizPage() {
                       </>
                     )}
                   </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ---- Step 7: Book a Call (Calendar) ---- */}
+          {step === 7 && (
+            <div key="step-7" className={`${animClass}`}>
+              <div className="rounded-2xl border border-[#E8E6E1] bg-white p-8 shadow-sm sm:p-12">
+                <h2 className="font-serif text-2xl text-[#1A1A18] sm:text-3xl text-center">
+                  Book Your Strategy Call
+                </h2>
+                <p className="mt-2 text-center text-[#4A4A45]">
+                  Pick a time that works for you and we&apos;ll walk you through
+                  your personalized lead plan.
+                </p>
+
+                <div className="mt-8 rounded-xl overflow-hidden border border-[#E8E6E1]">
+                  <iframe
+                    src="https://api.leadconnectorhq.com/widget/booking/qnYnomEPvz4vFovJQkor"
+                    style={{ width: "100%", border: "none", overflow: "hidden" }}
+                    scrolling="no"
+                    id="qnYnomEPvz4vFovJQkor_1776105991628"
+                    title="Book a Call - Optinly"
+                    height="700"
+                  />
                 </div>
               </div>
             </div>
@@ -468,28 +563,26 @@ export default function IntakeQuizPage() {
 /*  Sub-components                                                     */
 /* ------------------------------------------------------------------ */
 
-function OptionCard({
-  label,
-  selected,
-  onClick,
+function NavButtons({
+  onBack,
+  onNext,
+  nextDisabled,
 }: {
-  label: string;
-  selected: boolean;
-  onClick: () => void;
+  onBack: () => void;
+  onNext: () => void;
+  nextDisabled: boolean;
 }) {
   return (
-    <button
-      onClick={onClick}
-      className={`relative flex items-center justify-between rounded-xl border-2 px-5 py-4 text-left text-base font-medium transition-all ${
-        selected
-          ? "border-[#2D6A4F] bg-[#2D6A4F]/10 text-[#1A1A18]"
-          : "border-[#E8E6E1] bg-white text-[#1A1A18] hover:border-[#2D6A4F] hover:bg-[#2D6A4F]/5"
-      }`}
-    >
-      {label}
-      {selected && (
+    <div className="mt-8 flex items-center justify-between">
+      <BackButton onClick={onBack} inline />
+      <button
+        onClick={onNext}
+        disabled={nextDisabled}
+        className="inline-flex items-center rounded-xl bg-[#2D6A4F] px-8 py-3 text-base font-semibold text-white transition-colors hover:bg-[#245A43] disabled:cursor-not-allowed disabled:opacity-40"
+      >
+        Next
         <svg
-          className="h-5 w-5 shrink-0 text-[#2D6A4F]"
+          className="ml-2 h-4 w-4"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -498,11 +591,11 @@ function OptionCard({
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
-            d="M5 13l4 4L19 7"
+            d="M13 7l5 5m0 0l-5 5m5-5H6"
           />
         </svg>
-      )}
-    </button>
+      </button>
+    </div>
   );
 }
 
