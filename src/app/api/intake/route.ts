@@ -55,13 +55,14 @@ async function sendToGHL(body: IntakeSubmission) {
       "optinly-lead",
       ...improvements.map((i: string) => `improvement:${i}`),
     ],
+    companyName: body.website || "",
     customFields: [
-      { key: "industry", value: body.industry },
-      { key: "improvements", value: improvements.join(", ") },
-      { key: "annual_revenue", value: body.revenue || "" },
-      { key: "lead_website", value: body.website || "" },
-      { key: "tcpa_consent", value: body.tcpaConsent ? "Yes" : "No" },
-      { key: "consent_timestamp", value: new Date().toISOString() },
+      { key: "contact.industry", value: body.industry },
+      { key: "contact.improvements", value: improvements.join(", ") },
+      { key: "contact.annual_revenue", value: body.revenue || "" },
+      { key: "contact.lead_website", value: body.website || "" },
+      { key: "contact.tcpa_consent", value: body.tcpaConsent ? "Yes" : "No" },
+      { key: "contact.consent_timestamp", value: new Date().toISOString() },
     ],
   };
 
