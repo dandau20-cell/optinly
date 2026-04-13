@@ -57,7 +57,7 @@ async function sendToGHL(body: IntakeSubmission) {
           { key: "industry", value: body.industry },
           { key: "improvements", value: (body.improvements || []).join(", ") },
           { key: "annual_revenue", value: body.revenue || "" },
-          { key: "website", value: body.website || "" },
+          { key: "lead_website", value: body.website || "" },
           { key: "tcpa_consent", value: body.tcpaConsent ? "Yes" : "No" },
           { key: "consent_timestamp", value: new Date().toISOString() },
         ],
