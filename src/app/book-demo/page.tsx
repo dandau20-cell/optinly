@@ -1,66 +1,45 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
-export const metadata: Metadata = {
-  title: "Book a Demo",
-  description:
-    "Schedule a demo call to see how Optinly delivers qualified, exclusive leads for insurance agents and debt relief companies.",
-  alternates: { canonical: "https://optinly.io/book-demo" },
-  openGraph: {
-    title: "Book a Demo | Optinly",
-    description:
-      "Schedule a demo call to see how Optinly delivers qualified, exclusive leads for insurance agents and debt relief companies.",
-    url: "https://optinly.io/book-demo",
-  },
-};
+function BookingCalendar() {
+  const searchParams = useSearchParams();
+  const name = searchParams.get("name") || "";
+  const email = searchParams.get("email") || "";
+  const phone = searchParams.get("phone") || "";
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "What happens during an Optinly demo?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "During the demo, we walk you through how our lead generation process works, show you sample leads, discuss pricing for your specific needs, and set up your delivery preferences.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "How long is the demo call?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Most demo calls take about 20-30 minutes. We cover how leads are generated, what data you receive, pricing, and delivery setup.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Is there any obligation after booking a demo?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "No. The demo is free and there is no obligation. We want to make sure Optinly is the right fit for your business before you commit.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Can I start buying leads immediately after the demo?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes. If you decide Optinly is right for you, we can set up your account and start delivering leads within 24 hours of your demo call.",
-      },
-    },
-  ],
-};
+  const calendarBase =
+    "https://api.leadconnectorhq.com/widget/booking/qnYnomEPvz4vFovJQkor";
+
+  const params = new URLSearchParams();
+  if (name) params.set("name", name);
+  if (email) params.set("email", email);
+  if (phone) params.set("phone", phone);
+
+  const calendarUrl = params.toString()
+    ? `${calendarBase}?${params.toString()}`
+    : calendarBase;
+
+  return (
+    <div className="rounded-xl border border-border overflow-hidden bg-white">
+      <iframe
+        src={calendarUrl}
+        style={{ width: "100%", border: "none", overflow: "hidden" }}
+        scrolling="no"
+        id="qnYnomEPvz4vFovJQkor_1776105991628"
+        title="Book a Demo - Optinly"
+        height="700"
+      />
+    </div>
+  );
+}
 
 export default function BookDemoPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
       <script
         src="https://link.msgsndr.com/js/form_embed.js"
         type="text/javascript"
@@ -79,16 +58,15 @@ export default function BookDemoPage() {
             </p>
           </div>
 
-          <div className="rounded-xl border border-border overflow-hidden bg-white">
-            <iframe
-              src="https://api.leadconnectorhq.com/widget/booking/qnYnomEPvz4vFovJQkor"
-              style={{ width: "100%", border: "none", overflow: "hidden" }}
-              scrolling="no"
-              id="qnYnomEPvz4vFovJQkor_1776105991628"
-              title="Book a Demo - Optinly"
-              height="700"
-            />
-          </div>
+          <Suspense
+            fallback={
+              <div className="rounded-xl border border-border overflow-hidden bg-white flex items-center justify-center" style={{ height: 700 }}>
+                <p className="text-muted">Loading calendar...</p>
+              </div>
+            }
+          >
+            <BookingCalendar />
+          </Suspense>
 
           <div className="mt-12 grid sm:grid-cols-3 gap-6 text-center">
             <div>

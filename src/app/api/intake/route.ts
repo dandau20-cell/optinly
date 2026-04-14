@@ -49,8 +49,7 @@ async function sendToGHL(body: IntakeSubmission) {
     lastName,
     email: body.email,
     phone,
-    website: body.website || "",
-    companyName: (body as Record<string, unknown>).agency_name as string || "",
+    companyName: ("agency_name" in body ? String((body as Record<string, unknown>).agency_name) : ""),
     source: "Optinly Intake Quiz",
     tags: [
       `industry:${body.industry}`,

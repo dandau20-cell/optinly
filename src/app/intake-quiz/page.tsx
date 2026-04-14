@@ -92,7 +92,12 @@ export default function IntakeQuizPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-      router.push("/book-demo");
+      const params = new URLSearchParams({
+        name: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+      });
+      router.push(`/book-demo?${params.toString()}`);
     } catch {
       setIsSubmitting(false);
     }
