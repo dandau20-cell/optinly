@@ -65,8 +65,16 @@ export default function HomePage() {
       <Header />
       <main>
         {/* Hero */}
-        <section className="relative bg-foreground text-white overflow-hidden">
-          {/* Subtle gradient accents — pure CSS, no images */}
+        <section
+          className="relative bg-foreground text-white overflow-hidden"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=80')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          {/* Subtle gradient accents */}
           <div
             aria-hidden
             className="absolute inset-0 opacity-40 pointer-events-none"
@@ -85,8 +93,10 @@ export default function HomePage() {
                 We Unleash Your Customer Acquisition Potential
               </h1>
               <p className="mt-8 text-lg md:text-xl text-white/75 leading-relaxed max-w-2xl">
-                From ad to call — we build branded funnels, qualify with AI,
-                and warm-transfer ready-to-buy customers directly to your phone.
+                Powered by Customer Intent Calibration™ — our proprietary
+                system combines branded quiz funnels, AI-powered qualification,
+                phone verification, and live warm transfers to deliver
+                ready-to-buy customers to your phone.
               </p>
               <div className="mt-10 flex flex-col sm:flex-row gap-4">
                 <Link
@@ -244,34 +254,71 @@ export default function HomePage() {
               {[
                 {
                   vertical: "Insurance",
-                  brand: "TopInsuranceMatch.com",
+                  href: "https://www.topinsurancematch.com",
                   products: "Final Expense, Life Insurance",
+                  image:
+                    "https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?w=600&q=80",
+                  logo: (
+                    <span className="font-display text-3xl tracking-tight">
+                      <span className="text-white">Top</span>
+                      <span style={{ color: "#6B8F71" }}>Insurance</span>
+                      <span className="text-white">Match</span>
+                    </span>
+                  ),
                 },
                 {
                   vertical: "Legal",
-                  brand: "TopLegalMatch.com",
+                  href: "https://www.toplegalmatch.com",
                   products: "Personal Injury, MVA",
+                  image:
+                    "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&q=80",
+                  logo: (
+                    <span className="font-display text-3xl tracking-tight">
+                      <span className="text-white">Top</span>
+                      <span style={{ color: "#6B8F71" }}>Legal</span>
+                      <span className="text-white">Match</span>
+                    </span>
+                  ),
                 },
                 {
                   vertical: "Debt Relief",
-                  brand: "CovianDebt.com",
+                  href: "https://www.coviandebt.com",
                   products: "Debt Consolidation",
+                  image:
+                    "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&q=80",
+                  logo: (
+                    <span
+                      className="text-3xl tracking-tight lowercase"
+                      style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+                    >
+                      <span className="text-white">covian</span>
+                      <span style={{ color: "#4A9D6A" }}>debt</span>
+                    </span>
+                  ),
                 },
               ].map((item) => (
-                <div
+                <a
                   key={item.vertical}
-                  className="bg-surface border border-border rounded-2xl p-8 hover:shadow-md transition-shadow"
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative block overflow-hidden rounded-2xl p-8 min-h-[240px] hover:shadow-lg transition-shadow"
+                  style={{
+                    backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), url('${item.image}')`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
                 >
-                  <span className="text-xs uppercase tracking-[0.18em] text-sage-500 font-medium">
-                    {item.vertical}
-                  </span>
-                  <h3 className="mt-3 text-2xl font-display text-foreground">
-                    {item.brand}
-                  </h3>
-                  <p className="mt-4 text-muted leading-relaxed">
-                    {item.products}
-                  </p>
-                </div>
+                  <div className="relative flex flex-col h-full">
+                    <span className="text-xs uppercase tracking-[0.18em] text-amber-300 font-medium">
+                      {item.vertical}
+                    </span>
+                    <div className="mt-4">{item.logo}</div>
+                    <p className="mt-auto pt-6 text-white/80 leading-relaxed">
+                      {item.products}
+                    </p>
+                  </div>
+                </a>
               ))}
             </div>
           </div>
