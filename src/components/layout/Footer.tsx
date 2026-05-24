@@ -12,15 +12,15 @@ export default function Footer() {
               <span className="text-xl font-display text-white">Optinly</span>
             </Link>
             <p className="text-sm text-gray-400 leading-relaxed">
-              Qualified leads for insurance agents, debt relief companies, and
-              law firms. Pay only for results.
+              Customer acquisition platform for insurance, legal, and debt
+              relief. Branded funnels, AI qualification, live warm transfers.
             </p>
           </div>
 
-          {/* Product */}
+          {/* Platform */}
           <div>
             <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-4">
-              Product
+              Platform
             </h4>
             <ul className="space-y-2.5">
               <li>
@@ -33,10 +33,43 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  href="/#verticals"
+                  className="text-sm text-gray-300 hover:text-white transition-colors"
+                >
+                  Verticals
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/intake-quiz"
+                  className="text-sm text-gray-300 hover:text-white transition-colors"
+                >
+                  Schedule a Demo
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Verticals */}
+          <div>
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-4">
+              Verticals
+            </h4>
+            <ul className="space-y-2.5">
+              <li>
+                <Link
                   href="/life-insurance-leads"
                   className="text-sm text-gray-300 hover:text-white transition-colors"
                 >
-                  Life Insurance Leads
+                  Insurance
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/#verticals"
+                  className="text-sm text-gray-300 hover:text-white transition-colors"
+                >
+                  Legal
                 </Link>
               </li>
               <li>
@@ -44,21 +77,13 @@ export default function Footer() {
                   href="/debt-relief-leads"
                   className="text-sm text-gray-300 hover:text-white transition-colors"
                 >
-                  Debt Relief Leads
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/pricing"
-                  className="text-sm text-gray-300 hover:text-white transition-colors"
-                >
-                  Pricing
+                  Debt Relief
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Company */}
+          {/* Company / Legal */}
           <div>
             <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-4">
               Company
@@ -82,27 +107,10 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/intake-quiz"
-                  className="text-sm text-gray-300 hover:text-white transition-colors"
-                >
-                  Get Leads
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-4">
-              Legal
-            </h4>
-            <ul className="space-y-2.5">
-              <li>
-                <Link
                   href="/privacy"
                   className="text-sm text-gray-300 hover:text-white transition-colors"
                 >
-                  Privacy Policy
+                  Privacy
                 </Link>
               </li>
               <li>
@@ -110,7 +118,7 @@ export default function Footer() {
                   href="/terms"
                   className="text-sm text-gray-300 hover:text-white transition-colors"
                 >
-                  Terms of Service
+                  Terms
                 </Link>
               </li>
             </ul>
@@ -119,8 +127,7 @@ export default function Footer() {
 
         <div className="border-t border-gray-700 mt-12 pt-8">
           <p className="text-sm text-gray-400 text-center">
-            &copy; 2026 Optinly. A MediaStock LLC company. Registered in
-            Delaware.
+            &copy; 2026 Optinly. A MediaStock LLC company.
           </p>
         </div>
       </div>

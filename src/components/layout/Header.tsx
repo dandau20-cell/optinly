@@ -56,33 +56,33 @@ export default function Header() {
                 </svg>
               </button>
               <div className="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                <div className="bg-surface border border-border rounded-lg shadow-lg py-2 min-w-[200px]">
+                <div className="bg-surface border border-border rounded-lg shadow-lg py-2 min-w-[220px]">
                   <Link
                     href="/life-insurance-leads"
                     className="block px-4 py-2 text-sm text-foreground hover:bg-sage-50 hover:text-sage-500"
                   >
-                    Life Insurance Leads
+                    Insurance
+                  </Link>
+                  <Link
+                    href="/#verticals"
+                    className="block px-4 py-2 text-sm text-foreground hover:bg-sage-50 hover:text-sage-500"
+                  >
+                    Legal
                   </Link>
                   <Link
                     href="/debt-relief-leads"
                     className="block px-4 py-2 text-sm text-foreground hover:bg-sage-50 hover:text-sage-500"
                   >
-                    Debt Relief Leads
+                    Debt Relief
                   </Link>
                 </div>
               </div>
             </div>
             <Link
-              href="/pricing"
+              href="/intake-quiz"
               className="text-sm text-foreground hover:text-sage-500 transition-colors"
             >
-              Pricing
-            </Link>
-            <Link
-              href="/blog"
-              className="text-sm text-foreground hover:text-sage-500 transition-colors"
-            >
-              Blog
+              Schedule a Demo
             </Link>
           </nav>
 
@@ -92,7 +92,7 @@ export default function Header() {
               href="/intake-quiz"
               className="inline-flex items-center px-5 py-2.5 rounded-lg bg-sage-500 text-white text-sm font-medium hover:bg-sage-600 transition-colors"
             >
-              Get Leads
+              Schedule a Demo
             </Link>
           </div>
 
@@ -178,37 +178,30 @@ export default function Header() {
                     className="text-sm text-muted hover:text-sage-500"
                     onClick={() => setMobileOpen(false)}
                   >
-                    Life Insurance Leads
+                    Insurance
+                  </Link>
+                  <Link
+                    href="/#verticals"
+                    className="text-sm text-muted hover:text-sage-500"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    Legal
                   </Link>
                   <Link
                     href="/debt-relief-leads"
                     className="text-sm text-muted hover:text-sage-500"
                     onClick={() => setMobileOpen(false)}
                   >
-                    Debt Relief Leads
+                    Debt Relief
                   </Link>
                 </div>
               )}
-              <Link
-                href="/pricing"
-                className="text-sm text-foreground hover:text-sage-500"
-                onClick={() => setMobileOpen(false)}
-              >
-                Pricing
-              </Link>
-              <Link
-                href="/blog"
-                className="text-sm text-foreground hover:text-sage-500"
-                onClick={() => setMobileOpen(false)}
-              >
-                Blog
-              </Link>
               <Link
                 href="/intake-quiz"
                 className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-sage-500 text-white text-sm font-medium hover:bg-sage-600 transition-colors mt-2"
                 onClick={() => setMobileOpen(false)}
               >
-                Get Leads
+                Schedule a Demo
               </Link>
             </nav>
           </div>
